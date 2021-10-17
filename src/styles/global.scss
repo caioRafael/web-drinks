@@ -6,10 +6,10 @@
 
 :root {
   --white:#fff;
-  --background: #f9f9f9;
-  --gray-line: #DCDDE0;
+  --background: #ececec;
+  --gray-line: #9b9b9b;
   --text: #666666;
-  --text-highlight: #B3B9FF;
+  --background-card: #B3B9FF;
   --title: #2E384D;
   --red: #ee6e7a;
   --green: #4CD62B;
@@ -37,4 +37,8 @@ body {
 
 body, input, button {
   font: 400 1rem "Roboto", sans-serif;
+}
+
+button{
+  border: none;
 }
