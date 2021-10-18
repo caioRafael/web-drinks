@@ -29,16 +29,16 @@ export default function Modal({ setOpenModal, idDrink }: ModalProps) {
 
   const [drink, setDrink] = useState<DetailsDrink>();
 
-  async function getDrink() {
-    const response: AxiosResponse<DetailsDrink> = await api.get(`lookup.php?i=${idDrink}`);
-
-    console.log(response.data);
-    setDrink(response.data);
-  }
 
   useEffect(() => {
+    async function getDrink() {
+      const response: AxiosResponse<DetailsDrink> = await api.get(`lookup.php?i=${idDrink}`);
+
+      console.log(response.data);
+      setDrink(response.data);
+    }
     getDrink();
-  }, [])
+  }, [idDrink])
 
   return (
     <div className="modalBackground">

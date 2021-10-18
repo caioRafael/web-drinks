@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Modal from '../contexts/Modal'
+import Modal from './Modal'
 import '../styles/components/card.scss'
 
 type Drink = {
