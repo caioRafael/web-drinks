@@ -1,35 +1,22 @@
 import { useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
-import api from '../services/api';
 import Card from '../components/Card';
 
 import '../styles/pages/home.scss'
-import { Categorys, Drinks } from '../models/drinks';
+import { ListDrinks } from '../models/drinks';
+import { useDrinks } from '../hooks/useDrinks';
 
 export default function Home() {
-  const [categorys, setCategorys] = useState<Categorys>();
+  const { categorys, filterList } = useDrinks();
 
-  const [drinks, setDrinks] = useState<Drinks>();
+  const [drinks, setDrinks] = useState<ListDrinks[]>([]);
 
-  async function getGategorys() {
-    const response: AxiosResponse<Categorys> = await api.get('list.php?c=list');
-    // console.log(response.data);
-    setCategorys(response.data);
-  }
+  const [selectCategory, setSelectCategory] = useState('none');
 
   useEffect(() => {
-    getGategorys();
-  }, [])
+    const list = filterList(selectCategory)
 
-  async function getDtinks() {
-    const drinksData: AxiosResponse<Drinks> = await api.get('filter.php?c=Ordinary_Drink');
-    // console.log(drinksData.data);
-    setDrinks(drinksData.data);
-  }
-
-  useEffect(() => {
-    getDtinks();
-  }, [])
+    setDrinks(list);
+  }, [selectCategory, filterList])
 
   return (
     <div className="container">
@@ -38,48 +25,41 @@ export default function Home() {
       </header>
       <main>
         <section className="menu">
-          {/* <label htmlFor="Search">Search</label>
-          <input type="text" className="search" /> */}
-          <div className="searchInput">
+          {/* <div className="searchInput">
             <label htmlFor="Search">Search</label>
             <input type="text" className="search" />
-          </div>
-
+          </div> */}
           <div className="selectCategory">
-            <label htmlFor="categorys">Categorys</label>
-            <select className="categorys" id="categorys">
-              {categorys?.drinks.map((cat, i) => {
+            <label htmlFor="categorys">Categorys:</label>
+            <select className="categorys" id="categorys" onChange={(e) => {
+              setSelectCategory(e.target.value);
+            }}>
+              <option value="none" disabled>Select a category</option>
+              <option value="all">All Categorys</option>
+              {categorys.map((cat) => {
                 return (
-                  <option key={i} value={cat.strCategory}>{cat.strCategory}</option>
+                  <option key={cat.value} value={cat.value}>{cat.strCategory}</option>
                 )
               })}
             </select>
           </div>
-
-          {/* <strong>Categorias:</strong>
-
-          <div className="categorysContent">
-            {categorys?.drinks.map((cat, i) => {
+        </section>
+        {drinks.length === 0 ? (
+          <h1 className="warning">Select a category</h1>
+        ) : (
+          <div className="content">
+            {drinks.map((d) => {
               return (
-                <button className="buttonCategory" key={i}>{cat.strCategory}</button>
+                <Card
+                  key={d.idDrink}
+                  idDrink={d.idDrink}
+                  strDrink={d.strDrink}
+                  strDrinkThumb={d.strDrinkThumb}
+                />
               )
             })}
-          </div> */}
-        </section>
-
-        <div className="content">
-          {drinks?.drinks.map((d) => {
-            return (
-              <Card
-                key={d.idDrink}
-                idDrink={d.idDrink}
-                strDrink={d.strDrink}
-                strDrinkThumb={d.strDrinkThumb}
-              />
-            )
-          })}
-        </div>
-
+          </div>
+        )}
       </main>
     </div>
   );

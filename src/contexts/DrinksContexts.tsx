@@ -1,10 +1,11 @@
-import { AxiosResponse } from 'axios';
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import { Categorys } from '../models/drinks';
-import api from '../services/api';
+import { CategoryList, ListDrinks } from '../models/drinks';
+import { getCategorys, getDrinks } from '../services/drinksService';
 
 interface DrinksContextsData {
-
+  categorys: CategoryList[];
+  allDrinks: ListDrinks[];
+  filterList: (c: string) => ListDrinks[];
 }
 
 interface DrinksProviderProps {
@@ -14,23 +15,47 @@ interface DrinksProviderProps {
 export const DrinksContexts = createContext({} as DrinksContextsData);
 
 export function DrinksProvider({ children }: DrinksProviderProps) {
-  // const [categorys, setCategorys] = useState<Categorys>();
+  const [categorys, setCategorys] = useState<CategoryList[]>([]);
+  const [allDrinks, setAllDrinks] = useState<ListDrinks[]>([])
 
-  // const [drinks, setDrinks] = useState<Drinks>();
 
+  function filterList(category: string) {
+    let filteredList: ListDrinks[] = [];
 
-  async function getGategorys() {
-    const response: AxiosResponse<Categorys> = await api.get('list.php?c=list');
-    console.log(response.data);
-    // setCategorys(response.data);
+    if (category === 'all') {
+      filteredList = allDrinks;
+
+      console.log(filteredList);
+
+      return filteredList;
+    } else {
+      filteredList = allDrinks.filter(drink => drink.category === category);
+
+      console.log(filteredList);
+
+      return filteredList;
+    }
+  }
+
+  async function getDatas() {
+    const listCategorys = await getCategorys();
+    // console.log(listCategorys);
+    setCategorys(listCategorys);
+    const listDrinks = await getDrinks(listCategorys);
+    // console.log(listDrinks);
+    setAllDrinks(listDrinks);
   }
 
   useEffect(() => {
-    getGategorys();
+    getDatas();
   }, [])
 
   return (
-    <DrinksContexts.Provider value={{}}>
+    <DrinksContexts.Provider value={{
+      categorys: categorys,
+      allDrinks: allDrinks,
+      filterList: filterList,
+    }}>
       {children}
     </DrinksContexts.Provider>
   )

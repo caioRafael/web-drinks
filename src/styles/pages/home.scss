@@ -113,9 +113,32 @@
       }
     }
     
+    .warning{
+      align-self: center;
+      color: var(--red);
+    }
     .content{
       display: grid;
       grid-template-columns: repeat(5, 1fr);
+
+    }
+    @media (max-width: 1080px) {
+      .content{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .menu{
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .content{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   }
 }
