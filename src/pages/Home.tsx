@@ -4,18 +4,7 @@ import api from '../services/api';
 import Card from '../components/Card';
 
 import '../styles/pages/home.scss'
-
-interface Categorys {
-  drinks: { strCategory: string }[];
-}
-
-interface Drinks {
-  drinks: {
-    idDrink: string;
-    strDrink: string;
-    strDrinkThumb: string;
-  }[]
-}
+import { Categorys, Drinks } from '../models/drinks';
 
 export default function Home() {
   const [categorys, setCategorys] = useState<Categorys>();
@@ -48,10 +37,26 @@ export default function Home() {
         <h1>Web Drinks</h1>
       </header>
       <main>
-        <section>
-          <input type="text" placeholder="Search" />
+        <section className="menu">
+          {/* <label htmlFor="Search">Search</label>
+          <input type="text" className="search" /> */}
+          <div className="searchInput">
+            <label htmlFor="Search">Search</label>
+            <input type="text" className="search" />
+          </div>
 
-          <h3>Categorias:</h3>
+          <div className="selectCategory">
+            <label htmlFor="categorys">Categorys</label>
+            <select className="categorys" id="categorys">
+              {categorys?.drinks.map((cat, i) => {
+                return (
+                  <option key={i} value={cat.strCategory}>{cat.strCategory}</option>
+                )
+              })}
+            </select>
+          </div>
+
+          {/* <strong>Categorias:</strong>
 
           <div className="categorysContent">
             {categorys?.drinks.map((cat, i) => {
@@ -59,7 +64,7 @@ export default function Home() {
                 <button className="buttonCategory" key={i}>{cat.strCategory}</button>
               )
             })}
-          </div>
+          </div> */}
         </section>
 
         <div className="content">

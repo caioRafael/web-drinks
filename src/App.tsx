@@ -1,9 +1,12 @@
 import './styles/global.scss'
 import Home from './pages/Home';
+import { DrinksProvider } from './contexts/DrinksContexts';
 
 function App() {
   return (
-    <Home />
+    <DrinksProvider>
+      <Home />
+    </DrinksProvider>
   );
 }
 

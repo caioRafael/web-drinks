@@ -29,6 +29,89 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+
+    .menu{
+      display: flex;
+      flex-direction: row;
+      margin-top: 20px;
+
+      width: 100%;
+
+      align-items: center;
+      justify-content: space-evenly;
+
+
+
+      .searchInput{
+        display: flex;
+        flex-direction: column;
+      
+        label{
+          font: 500 20px 'Roboto', sans-serif;
+        }
+      
+        input{
+          width: 400px;
+          height: 50px;
+      
+          margin: 5px 0 20px 0;
+          padding: 10px;
+      
+          border: none;
+          border-radius: 10px;
+      
+          box-shadow: 0 0 1rem var(--gray-line);
+        }
+      }
+
+      .selectCategory{
+        display: flex;
+        flex-direction: column;
+      
+        label{
+          font: 500 20px 'Roboto', sans-serif;
+        }
+      
+        select{
+          width: 400px;
+          height: 50px;
+
+          margin: 5px 0 20px 0;
+          padding: 10px;
+      
+          border: none;
+          border-radius: 10px;
+
+          background-color: var(--white);
+      
+          box-shadow: 0 0 1rem var(--gray-line);
+        }
+      }
+    }
+
+
+    strong{
+      font: 500 3rem "Roboto", sans-serif;
+      color: var(--blue-dark);
+    }
+
+    .categorysContent{
+      width: 100%;
+
+      margin: 20px 0;
+
+      .buttonCategory{
+        min-width: 100px;
+        height: 50px;
+
+        margin: 10px 10px;
+        padding: 10px;
+
+        background-color: var(--white);
+
+        border-radius: 20px;
+      }
+    }
     
     .content{
       display: grid;
